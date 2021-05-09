@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>myportfolio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-buttons class="ion-justify-content-center">
+    <ion-button routerLink="/home" color="tertiary" fill="solid">
+      Home
+    </ion-button>
+  </ion-buttons>
+
+  <!--&lt;!&ndash; Default Input &ndash;&gt;
+  <ion-input></ion-input>
+
+  &lt;!&ndash; Input with value &ndash;&gt;
+  <ion-input value="custom"></ion-input>
+
+  &lt;!&ndash; Input with placeholder &ndash;&gt;
+  <ion-input placeholder="Enter Input"></ion-input>
+
+  &lt;!&ndash; Input with clear button when there is a value &ndash;&gt;
+  <ion-input clearInput value="clear me"></ion-input>
+
+  &lt;!&ndash; Number type input &ndash;&gt;
+  <ion-input type="number" value="333"></ion-input>
+
+  &lt;!&ndash; Disabled input &ndash;&gt;
+  <ion-input value="Disabled" disabled></ion-input>
+
+  &lt;!&ndash; Readonly input &ndash;&gt;
+  <ion-input value="Readonly" readonly></ion-input>
+
+  &lt;!&ndash; Inputs with labels &ndash;&gt;
+  <ion-item>
+    <ion-label>Default Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Floating Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed">Fixed Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Stacked Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>-->
+
+  <!--<p>crypto-form works!</p>-->
+
+  <ion-card>
+    <ion-card-title>Add Coins to your portfolio</ion-card-title>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="fixed">Coin name:</ion-label>
+        <ion-input value="BTC"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">Price:</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">Quantity:</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">Date of buying:</ion-label>
+        <ion-input type="date"></ion-input>
+      </ion-item>
+      <ion-buttons class="ion-justify-content-center">
+        <ion-button color="success" fill="solid">
+          Add
+        </ion-button>
+      </ion-buttons>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+

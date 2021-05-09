@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-buttons class="ion-justify-content-center">
+    <ion-button (click)="openMenu()" color="tertiary" fill="solid">
+      My Portfolio
+    </ion-button>
+  </ion-buttons>
+
+  <ion-card *ngFor="let cryptocurrency of cryptos$">
+    <ion-card-header>
+      <ion-card-subtitle>{{cryptocurrency.id}}</ion-card-subtitle>
+      <ion-card-title><img class="img" src="{{cryptocurrency.logo_url}}"> {{cryptocurrency.name}} </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="content">
+      Last price: {{cryptocurrency.price}} €
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>
