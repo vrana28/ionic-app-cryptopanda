@@ -23,6 +23,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../data.service';
 import {Cryptocurrency} from '../cryptocurrency.model';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -30,7 +31,7 @@ import {Cryptocurrency} from '../cryptocurrency.model';
 })
 export class HomePage implements OnInit {
 
-  cryptos$: Cryptocurrency[] | any;
+  public cryptos$: Cryptocurrency[] | any;
 
   constructor(private dataService: DataService, private menuCtrl: MenuController) {
   }
@@ -38,6 +39,17 @@ export class HomePage implements OnInit {
   openMenu(){
     this.menuCtrl.open();
   }
+
+ /* doRefresh(event) {
+    console.log(HomePage);
+
+    setTimeout(() => {
+      console.log(HomePage);
+      event.target.complete();
+    }, 2000);
+  }*/
+
+
 
   // tslint:disable-next-line:typedef
   ngOnInit() {

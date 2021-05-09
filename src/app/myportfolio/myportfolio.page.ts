@@ -15,6 +15,9 @@ export class MyportfolioPage implements OnInit {
 }*/
 
 import {Component, Output} from '@angular/core';
+import {Cryptocurrency} from "../cryptocurrency.model";
+import {DataService} from "../data.service";
+import {MenuController} from "@ionic/angular";
 
 @Component({
   selector: 'app-myporfolio',
@@ -22,20 +25,34 @@ import {Component, Output} from '@angular/core';
   styleUrls: ['./myportfolio.page.scss']
 })
 export class MyportfolioPage {
-  text = 'quote';
+  /*text = 'quote';
   author = 'author';
-  fullQuote = 'full quote';
+  fullQuote = 'full quote';*/
 
+  public cryptos$: Cryptocurrency[] | any;
 
-  onAddQuote(): void {
-    console.log('Coin added');
-    this.fullQuote = `'${this.text}' - ${this.author}`;
+  constructor(private dataService: DataService, private menuCtrl: MenuController) {
   }
 
-  onChangeOfAuthor(event: Event): void {
+  openMenu(){
+    this.menuCtrl.open();
+  }
+
+  // tslint:disable-next-line:typedef
+  ngOnInit() {
+    return this.dataService.getPrices().subscribe( (data: any) => this.cryptos$ = data);
+  }
+
+
+ /* onAddQuote(): void {
+    console.log('Coin added');
+    this.fullQuote = `'${this.text}' - ${this.author}`;
+  }*/
+
+  /*onChangeOfAuthor(event: Event): void {
     console.log(event);
     console.log(event.target);
     this.author = (event.target as HTMLInputElement).value;
-  }
+  }*/
 
 }
