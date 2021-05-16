@@ -17,7 +17,8 @@ export class MyportfolioPage implements OnInit {
 import {Component, Output} from '@angular/core';
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {DataService} from "../data.service";
-import {MenuController} from "@ionic/angular";
+import {MenuController, ModalController} from "@ionic/angular";
+import {MyportfolioModalComponent} from "./myportfolio-modal/myportfolio-modal.component";
 
 @Component({
   selector: 'app-myporfolio',
@@ -31,11 +32,25 @@ export class MyportfolioPage {
 
   public cryptos$: Cryptocurrency[] | any;
 
-  constructor(private dataService: DataService, private menuCtrl: MenuController) {
+  constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController) {
   }
 
   openMenu(){
     this.menuCtrl.open();
+  }
+
+  openModal(){
+    this.modalCtrl.create({
+      component: MyportfolioModalComponent,
+      componentProps: {title:'Add coin'}
+    }).then((modal)=>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then((resultData)=>{
+      if(resultData.role ==='confirm'){
+        console.log(resultData);
+      }
+    });
   }
 
   // tslint:disable-next-line:typedef
