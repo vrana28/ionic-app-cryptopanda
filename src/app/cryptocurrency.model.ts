@@ -7,7 +7,8 @@ export class Cryptocurrency{
     // tslint:disable-next-line:variable-name
     // eslint-disable-next-line @typescript-eslint/naming-convention
     public log_url: string,
-    public priceDate: Date,
+    public boughtDate: Date,
     public rank: number,
+    public quantity: number
   ) {}
 }
