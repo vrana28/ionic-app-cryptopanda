@@ -3,12 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {map, switchMap, take, tap} from "rxjs/operators";
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {BehaviorSubject} from "rxjs";
+import {AuthService} from "../auth/auth.service";
 
 interface CoinData{
   cryptocurrency: string,
   price: number,
   quantity: number,
   boughtDate: Date,
+  userId: string
 }
 
 @Injectable({
@@ -18,7 +20,7 @@ export class CoinsService {
 
   private _coins = new BehaviorSubject<Cryptocurrency[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   get coins(){
     return this._coins.asObservable();
@@ -27,29 +29,28 @@ export class CoinsService {
   // @ts-ignore
   addCoins(cryptocurrency:string,price:number,quantity:number, boughtDate: Date){
     let generatedId;
+    let newCoin : Cryptocurrency;
 
-    return this.http.post<{name: string}>('https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/coins.json',
-      {cryptocurrency,
-            price,
-            quantity,
-            boughtDate}).pipe(switchMap((resData)=>{
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap(userId=>{
+        newCoin = new Cryptocurrency(null,
+          cryptocurrency,price,null,boughtDate,null,quantity,userId);
+        return this.http.post<{name: string}>('https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/coins.json',
+          newCoin);
+      }),
+      take(1),
+      switchMap((resData)=>{
 
-              generatedId = resData.name;
-              return  this.coins;
-
-
-    }), take(1),
+        generatedId = resData.name;
+        return  this.coins;
+      }),
+      take(1),
       tap((coins)=>{
-      this._coins.next(coins.concat({
-        id: generatedId,
-        name,
-        price,
-        quantity,
-        boughtDate,
-        log_url:null,
-        rank:null
-      }));
-    }));
+        newCoin.id = generatedId;
+        this._coins.next(coins.concat(newCoin));
+      })
+      );
   }
 
   getCoins(){
@@ -59,15 +60,8 @@ export class CoinsService {
       const coins: Cryptocurrency[] = [];
       for(const key in coinsData){
         if(coinsData.hasOwnProperty(key)){
-          coins.push({
-            id: key,
-            name: coinsData[key].cryptocurrency,
-            price: coinsData[key].price,
-            quantity: coinsData[key].quantity,
-            boughtDate: coinsData[key].boughtDate,
-            log_url: null,
-            rank: null
-          });
+          coins.push(new Cryptocurrency(key,coinsData[key].cryptocurrency,coinsData[key].price,null,coinsData[key].boughtDate,
+            null,coinsData[key].quantity, coinsData[key].userId));
         }
       }
       return coins;
