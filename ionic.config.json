@@ -1,5 +1,7 @@
 {
   "name": "ionic-app-cryptopanda",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
