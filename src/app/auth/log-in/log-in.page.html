@@ -36,7 +36,12 @@
 
       <ion-row class="ion-justify-content-center">
         <ion-col >
-          <ion-button type="submit" expand="block" shape="round" size="large" [disabled]="logInForm.invalid" >Log in</ion-button>
+
+          <div class="ion-text-center">
+            <ion-spinner color="success" *ngIf="isLoading"></ion-spinner>
+          </div>
+          <ion-button type="submit" expand="block" shape="round" size="large" [disabled]="logInForm.invalid" *ngIf="!isLoading">Log in</ion-button>
+          <ion-button  fill="clear" routerLink="/register" >Register</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

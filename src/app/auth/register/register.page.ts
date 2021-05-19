@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../auth.service";
+import {LoadingController} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -10,7 +13,7 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor() { }
+  constructor(private authService: AuthService, private loadingCtrl: LoadingController, private router: Router) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -22,7 +25,17 @@ export class RegisterPage implements OnInit {
   }
 
   onRegister(){
-    console.log(this.registerForm);
-  }
+    this.loadingCtrl
+      .create({message: "Registering....."})
+      .then((loadingE1)=>{
+        loadingE1.present();
 
+        this.authService.register(this.registerForm.value).subscribe(resData=>{
+          console.log('Registracija je uspela');
+          console.log(resData);
+          loadingE1.dismiss();
+          this.router.navigateByUrl('/home');
+      });
+    });
+  }
 }
