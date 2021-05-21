@@ -3,7 +3,14 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Market</ion-title>
+    <ion-title>My Portfolio</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-fab-button size="small" color="success" (click)="openModal()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -13,4 +20,22 @@
       Home
     </ion-button>
   </ion-buttons>
+
+  <ion-card *ngFor="let offer of offers">
+    <ion-card-header>
+      <ion-card-title>Sell</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="content">
+      <ion-list>
+        <ion-item>
+          <ion-label>Coin: {{offer.coinName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Quantity: {{offer.quantity}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
-import {NgForm} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-log-in',
@@ -11,10 +11,14 @@ import {NgForm} from "@angular/forms";
 export class LogInPage implements OnInit {
 
   isLoading = false;
-
+  loginForm: FormGroup;
   constructor(private authService: AuthService, private router:Router) { }
 
   ngOnInit() {
+    this.loginForm = new FormGroup({
+      email: new FormControl('djole@gmail.com', [Validators.required,Validators.email]),
+      password: new FormControl('djole1234', [Validators.required,Validators.minLength(7)])
+    });
   }
 
   onLogIn(logInForm: NgForm){

@@ -8,10 +8,7 @@ const routes: Routes = [
     path: '',
     component: MarketPage
   },
-  {
-    path: 'explore',
-    loadChildren: () => import('./explore/explore.module').then( m => m.ExplorePageModule)
-  }
+
 ];
 
 @NgModule({

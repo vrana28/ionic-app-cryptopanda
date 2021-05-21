@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MarketPageRoutingModule } from './market-routing.module';
 
 import { MarketPage } from './market.page';
+import {MarketModalComponent} from "./market-modal/market-modal.component";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { MarketPage } from './market.page';
     IonicModule,
     MarketPageRoutingModule
   ],
-  declarations: [MarketPage]
+  declarations: [MarketPage, MarketModalComponent],
+  entryComponents: [MarketModalComponent]
 })
 export class MarketPageModule {}
