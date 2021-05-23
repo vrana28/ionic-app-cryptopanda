@@ -6,7 +6,7 @@ import {BehaviorSubject} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 
 interface CoinData{
-  cryptocurrency: string,
+  name: string,
   price: number,
   quantity: number,
   boughtDate: Date,
@@ -60,7 +60,7 @@ export class CoinsService {
       const coins: Cryptocurrency[] = [];
       for(const key in coinsData){
         if(coinsData.hasOwnProperty(key)){
-          coins.push(new Cryptocurrency(key,coinsData[key].cryptocurrency,coinsData[key].price,null,coinsData[key].boughtDate,
+          coins.push(new Cryptocurrency(key,coinsData[key].name,coinsData[key].price,null,coinsData[key].boughtDate,
             null,coinsData[key].quantity, coinsData[key].userId));
         }
       }

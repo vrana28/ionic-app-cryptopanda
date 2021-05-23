@@ -31,7 +31,7 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   /*text = 'quote';
   author = 'author';
   fullQuote = 'full quote';*/
-  public balance: number;
+  public balance: number=0;
   public cryptos$: Cryptocurrency[] | any;
   private coinSub: Subscription;
 

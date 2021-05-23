@@ -30,7 +30,18 @@
 
   <ion-card *ngFor="let coin of coins">
     <ion-card-header>
-      <ion-card-title> {{coin.name}} </ion-card-title>
+      <ion-card-subtitle>{{coin.name}}</ion-card-subtitle>
+      <ion-card-title *ngIf="coin.name=='BTC'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='ETH'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/eth.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='ADA'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ada.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='DOGE'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/doge.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='BNB'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/bnb.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='XRP'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/xrp.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='DOT'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/dot.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='LTC'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ltc.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='LINK'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/link.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='SHIB'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/shib.svg"></ion-card-title>
+      <ion-card-title *ngIf="coin.name=='NEO'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/neo.svg"></ion-card-title>
     </ion-card-header>
 
     <ion-card-content class="content">
