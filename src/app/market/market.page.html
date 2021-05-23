@@ -21,10 +21,12 @@
     </ion-button>
   </ion-buttons>
 
-  <ion-card *ngFor="let offer of offers">
+  <!--<ion-card *ngFor="let offer of offers">
     <ion-card-header>
-      <ion-card-title>Sell</ion-card-title>
+      <ion-card-title *ngIf="offer.type == 0">BUYING {{offer.location}}</ion-card-title>
+      <ion-card-title *ngIf="offer.type == 1">SELLING {{offer.location}}</ion-card-title>
     </ion-card-header>
+
 
     <ion-card-content class="content">
       <ion-list>
@@ -36,6 +38,36 @@
         </ion-item>
       </ion-list>
     </ion-card-content>
-  </ion-card>
+  </ion-card>-->
+
+  <ion-list>
+    <ion-list-header>
+      Current offers
+    </ion-list-header>
+
+    <ion-item *ngFor="let offer of offers">
+      <ion-avatar slot="start">
+        <img *ngIf="offer.coinName=='BTC'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg">
+        <img *ngIf="offer.coinName=='ETH'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/eth.svg">
+        <img *ngIf="offer.coinName=='ADA'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ada.svg">
+        <img *ngIf="offer.coinName=='DOGE'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/doge.svg">
+        <img *ngIf="offer.coinName=='BNB'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/bnb.svg">
+        <img *ngIf="offer.coinName=='XRP'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/xrp.svg">
+        <img *ngIf="offer.coinName=='DOT'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/dot.svg">
+        <img *ngIf="offer.coinName=='LTC'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ltc.svg">
+        <img *ngIf="offer.coinName=='LINK'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/link.svg">
+        <img *ngIf="offer.coinName=='SHIB'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/shib.svg">
+        <img *ngIf="offer.coinName=='NEO'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/neo.svg">
+      </ion-avatar>
+      <ion-label>
+        <h2 *ngIf="offer.type == 0" >BUYING</h2>
+        <h2 *ngIf="offer.type == 1" >SELLING</h2>
+        <h2>In {{offer.location}}</h2>
+        <h3>Cryptocurrency: {{offer.coinName}}</h3>
+        <h3>Quantity: {{offer.quantity}}</h3>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

@@ -31,7 +31,7 @@ export class MarketModalComponent implements OnInit {
       return;
     }
     this.modalCtr.dismiss({offerData:{cryptocurrency: this.form.value['cryptocurrency'],
-        type:this.form.value['type'],quantity:this.form.value['quantity']}},'confirm');
+        type:this.form.value['type'],quantity:this.form.value['quantity'], location:this.form.value['location']}},'confirm');
   }
 
 }

@@ -4,7 +4,8 @@ export class Offer{
               public type: TypeOfOffer,
               public coinName: string,
               public quantity: number,
-              public userId: string
+              public userId: string,
+              public location: string
   ) {}
 }
 
