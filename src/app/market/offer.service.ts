@@ -32,13 +32,19 @@ export class OfferService {
   addOffers(cryptocurrency:string,quantity:number, type: TypeOfOffer, location:string){
     let generatedId;
     let newOffer : Offer;
+    let fetchedUserId: string;
 
     return this.authService.userId.pipe(
       take(1),
       switchMap(userId=>{
+        fetchedUserId=userId;
+        return this.authService.token;
+      }),
+      take(1),
+      switchMap((token)=>{
         newOffer = new Offer(null,
-          type,cryptocurrency,quantity,userId, location);
-        return this.http.post<{name: string}>('https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers.json',
+          type,cryptocurrency,quantity,fetchedUserId, location);
+        return this.http.post<{name: string}>(`https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers.json?auth=${token}`,
           newOffer);
       }),
       take(1),
@@ -56,9 +62,14 @@ export class OfferService {
   }
 
   getOffers(){
-    return this.http.
-    get<{[key:string]:OfferData}>('https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers.json').
-    pipe(map((offerData)=>{
+    return this.authService.token.pipe(
+      take(1),
+    switchMap((token)=>{
+      return this.http.
+      get<{[key:string]:OfferData}>(`https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers.json?auth=${token}`
+      );
+    }),
+    map((offerData)=>{
         const offers: Offer[] = [];
         for(const key in offerData){
           if(offerData.hasOwnProperty(key)){
