@@ -24,7 +24,7 @@
   <ion-list>
     <ion-item>
       <ion-label>Balance:</ion-label>
-      <ion-label>{{balance}}</ion-label>
+      <ion-label color="success">{{balance| number:'1.2-2'}} €</ion-label>
     </ion-item>
   </ion-list>
 
@@ -42,6 +42,11 @@
       <ion-card-title *ngIf="coin.name=='LINK'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/link.svg"></ion-card-title>
       <ion-card-title *ngIf="coin.name=='SHIB'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/shib.svg"></ion-card-title>
       <ion-card-title *ngIf="coin.name=='NEO'"><img src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/neo.svg"></ion-card-title>
+      <ion-buttons class="ion-justify-content-end">
+        <ion-button color="danger" fill="solid"  (click)="deleteSth(coin)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-card-header>
 
     <ion-card-content class="content">

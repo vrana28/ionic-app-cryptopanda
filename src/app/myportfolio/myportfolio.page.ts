@@ -26,6 +26,7 @@ import {AuthService} from "../auth/auth.service";
 import {LogInPage} from "../auth/log-in/log-in.page";
 
 
+
 @Component({
   selector: 'app-myporfolio',
   templateUrl: './myportfolio.page.html',
@@ -70,6 +71,10 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
     });
   }
 
+  deleteSth(key){
+    console.log(key);
+    this.coinService.deleteCoin(key);
+  }
   ngOnInit() {
     this.coinSub = this.coinService.coins.subscribe((coins)=>{
       this.coins = coins;
@@ -78,9 +83,13 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   }
 
   ionViewWillEnter(){
+    this.balance=0;
     console.log(LogInPage.idCurrent)
     this.coinService.getCoins(LogInPage.idCurrent).subscribe((coins)=>{
-      /*this.coins = coins;*/
+      this.coins = coins;
+      for(const coin in this.coins){
+        this.balance+=this.coins[coin].price*this.coins[coin].quantity;
+      }
     });
   }
 

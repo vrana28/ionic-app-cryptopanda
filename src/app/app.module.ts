@@ -8,6 +8,11 @@ import {HomePage} from './home/home.page';
 import {DataService} from './data.service';
 import {HttpClientModule} from '@angular/common/http';
 import {LogInPage} from "./auth/log-in/log-in.page";
+import {AngularFirestoreModule} from "@angular/fire/firestore";
+import {AngularFireModule} from "@angular/fire";
+import {environment} from "../environments/environment";
+import {FormsModule} from "@angular/forms";
+
 
 
 @NgModule({
@@ -19,7 +24,10 @@ import {LogInPage} from "./auth/log-in/log-in.page";
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    AppRoutingModule],
+    AppRoutingModule,
+    FormsModule
+  ],
+
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: DataService},{provide: LogInPage}],
   bootstrap: [AppComponent]
 })

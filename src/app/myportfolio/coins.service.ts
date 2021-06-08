@@ -4,6 +4,8 @@ import {map, switchMap, take, tap} from "rxjs/operators";
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {BehaviorSubject} from "rxjs";
 import {AuthService} from "../auth/auth.service";
+import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+
 
 interface CoinData{
   name: string,
@@ -20,9 +22,9 @@ interface CoinData{
 export class CoinsService {
 
   private _coins = new BehaviorSubject<Cryptocurrency[]>([]);
+  /*itemDoc: AngularFirestoreDocument<Cryptocurrency>;*/
 
-
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService/*, public afs: AngularFirestore*/) { }
 
 
   get coins(){
@@ -60,6 +62,12 @@ export class CoinsService {
         this._coins.next(coins.concat(newCoin));
       })
       );
+  }
+
+  deleteCoin(coin: Cryptocurrency){
+    console.log(coin.id);
+   /* this.itemDoc = this.afs.doc(`coins/${coin.id}`);
+    this.itemDoc.delete();*/
   }
 
 
