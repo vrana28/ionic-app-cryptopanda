@@ -13,6 +13,7 @@ interface CoinData{
   userId: string
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,9 @@ export class CoinsService {
 
   private _coins = new BehaviorSubject<Cryptocurrency[]>([]);
 
+
   constructor(private http: HttpClient, private authService: AuthService) { }
+
 
   get coins(){
     return this._coins.asObservable();
@@ -59,7 +62,8 @@ export class CoinsService {
       );
   }
 
-  getCoins() {
+
+  getCoins(id) {
     return this.authService.token.pipe(
       take(1),
       switchMap((token) => {
@@ -70,7 +74,7 @@ export class CoinsService {
       map((coinsData) => {
         const coins: Cryptocurrency[] = [];
         for (const key in coinsData) {
-          if (coinsData.hasOwnProperty(key)) {
+          if (coinsData.hasOwnProperty(key) && coinsData[key].userId==id) {
             coins.push(new Cryptocurrency(key, coinsData[key].name, coinsData[key].price, null, coinsData[key].boughtDate,
               null, coinsData[key].quantity, coinsData[key].userId));
           }

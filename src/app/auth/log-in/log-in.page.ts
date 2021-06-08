@@ -10,7 +10,10 @@ import {AlertController} from "@ionic/angular";
   styleUrls: ['./log-in.page.scss'],
 })
 export class LogInPage implements OnInit {
-
+  public static idCurrent:string;
+  public static uName: string;
+  public static uLocation:string;
+  public static uTelephone:number;
   isLoading = false;
   loginForm: FormGroup;
   constructor(private authService: AuthService, private router:Router, private alertCtrl: AlertController) { }
@@ -30,6 +33,10 @@ export class LogInPage implements OnInit {
       this.authService.logIn(logInForm.value).subscribe(resData=>{
         console.log('Prijava je uspesna');
         console.log(resData);
+        LogInPage.idCurrent=resData.localId;
+        LogInPage.uName=resData.name;
+        LogInPage.uLocation = resData.location;
+        LogInPage.uTelephone = resData.telephone;
         this.isLoading = false;
         this.router.navigateByUrl('/home');
       },

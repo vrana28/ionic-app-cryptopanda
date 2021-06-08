@@ -21,6 +21,10 @@ import {MenuController, ModalController} from "@ionic/angular";
 import {MyportfolioModalComponent} from "./myportfolio-modal/myportfolio-modal.component";
 import {CoinsService} from "./coins.service";
 import {Subscription} from "rxjs";
+import {User} from "../auth/user.model";
+import {AuthService} from "../auth/auth.service";
+import {LogInPage} from "../auth/log-in/log-in.page";
+
 
 @Component({
   selector: 'app-myporfolio',
@@ -35,7 +39,8 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   public cryptos$: Cryptocurrency[] | any;
   private coinSub: Subscription;
 
-  constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private coinService:CoinsService) {
+  constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private coinService:CoinsService, private auth:AuthService,
+              private logIn: LogInPage) {
     console.log('constructor');
   }
 
@@ -43,8 +48,8 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
     this.menuCtrl.open();
   }
 
-
-
+  id: string;
+  user: any;
   coins: Cryptocurrency[];
 
   openModal(){
@@ -65,15 +70,16 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
     });
   }
 
-  // tslint:disable-next-line:typedef
   ngOnInit() {
     this.coinSub = this.coinService.coins.subscribe((coins)=>{
       this.coins = coins;
     });
+    this.auth.userId.subscribe(data=>this.id=data);
   }
 
   ionViewWillEnter(){
-    this.coinService.getCoins().subscribe((coins)=>{
+    console.log(LogInPage.idCurrent)
+    this.coinService.getCoins(LogInPage.idCurrent).subscribe((coins)=>{
       /*this.coins = coins;*/
     });
   }

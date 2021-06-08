@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {HomePage} from './home/home.page';
 import {DataService} from './data.service';
 import {HttpClientModule} from '@angular/common/http';
+import {LogInPage} from "./auth/log-in/log-in.page";
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: DataService}],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: DataService},{provide: LogInPage}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
