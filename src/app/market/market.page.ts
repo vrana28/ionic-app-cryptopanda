@@ -42,7 +42,7 @@ export class MarketPage implements OnInit {
       if(resultData.role ==='confirm'){
         console.log(resultData);
         this.offerService.addOffers(resultData.data.offerData.cryptocurrency,
-          resultData.data.offerData.quantity,resultData.data.offerData.type, resultData.data.offerData.location).subscribe((offers)=>{
+          resultData.data.offerData.quantity,resultData.data.offerData.type, resultData.data.offerData.location, resultData.data.offerData.userName, resultData.data.offerData.contact).subscribe((offers)=>{
           /*this.coins = coins;*/
         });
       }

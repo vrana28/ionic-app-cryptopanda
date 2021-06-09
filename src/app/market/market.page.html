@@ -45,7 +45,7 @@
       Current offers
     </ion-list-header>
 
-    <ion-item *ngFor="let offer of offers">
+    <ion-item lines="full" *ngFor="let offer of offers">
       <ion-avatar slot="start">
         <img *ngIf="offer.coinName=='BTC'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg">
         <img *ngIf="offer.coinName=='ETH'" src="https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/eth.svg">
@@ -65,6 +65,9 @@
         <h2>In {{offer.location}}</h2>
         <h3>Cryptocurrency: {{offer.coinName}}</h3>
         <h3>Quantity: {{offer.quantity}}</h3>
+        <hr color="success">
+        <h3>Name: {{offer.userName}}</h3>
+        <h3>Contact: {{"0"+offer.contact}}</h3>
       </ion-label>
     </ion-item>
 

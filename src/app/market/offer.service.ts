@@ -11,7 +11,9 @@ interface OfferData{
   type: TypeOfOffer,
   quantity: number,
     userId: string,
-  location: string
+  location: string,
+  userName: string,
+  contact: number
 }
 
 @Injectable({
@@ -29,7 +31,7 @@ export class OfferService {
   }
 
   // @ts-ignore
-  addOffers(cryptocurrency:string,quantity:number, type: TypeOfOffer, location:string){
+  addOffers(cryptocurrency:string,quantity:number, type: TypeOfOffer, location:string, userName:string, contact:number){
     let generatedId;
     let newOffer : Offer;
     let fetchedUserId: string;
@@ -43,7 +45,7 @@ export class OfferService {
       take(1),
       switchMap((token)=>{
         newOffer = new Offer(null,
-          type,cryptocurrency,quantity,fetchedUserId, location);
+          type,cryptocurrency,quantity,fetchedUserId, location, userName, contact);
         return this.http.post<{name: string}>(`https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers.json?auth=${token}`,
           newOffer);
       }),
@@ -73,7 +75,8 @@ export class OfferService {
         const offers: Offer[] = [];
         for(const key in offerData){
           if(offerData.hasOwnProperty(key)){
-            offers.push(new Offer(key,offerData[key].type,offerData[key].coinName,offerData[key].quantity, offerData[key].userId, offerData[key].location));
+            offers.push(new Offer(key,offerData[key].type,offerData[key].coinName,offerData[key].quantity, offerData[key].userId, offerData[key].location,
+              offerData[key].userName, offerData[key].contact));
           }
         }
         return offers;

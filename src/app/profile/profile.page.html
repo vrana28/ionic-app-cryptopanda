@@ -9,29 +9,25 @@
 
 <ion-content>
 
-
   <ion-item>
     <ion-avatar slot="start" >
       <img src="https://image.freepik.com/free-vector/smiling-girl-avatar_102172-32.jpg">
     </ion-avatar>
-    <ion-label>Name:{{name}}</ion-label>
+    <ion-label>PANDA USER INFORMATION</ion-label>
   </ion-item>
 
   <ion-list>
     <ion-item>
-      <ion-label>Surname:</ion-label>
+      <ion-label>Name: {{userName}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Location:</ion-label>
+      <ion-label>Location: {{location}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Telephone:</ion-label>
+      <ion-label>Telephone: {{'0'+telephone}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Points:</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Asset Balances (€):</ion-label>
+      <ion-label>Invested Money (€): {{balance| number:'1.2-2'}} €</ion-label>
     </ion-item>
   </ion-list>
 

@@ -3,7 +3,6 @@ export class User{
               public telephone: number, public points:number=0, private _token: string,
               private tokenExpirationDate: Date) {
 
-
   }
 
   get token(){
@@ -12,5 +11,4 @@ export class User{
     }
     return this._token;
   }
-
 }

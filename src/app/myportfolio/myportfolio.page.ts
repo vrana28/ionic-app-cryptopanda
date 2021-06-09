@@ -17,14 +17,13 @@ export class MyportfolioPage implements OnInit {
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {DataService} from "../data.service";
-import {MenuController, ModalController} from "@ionic/angular";
+import {LoadingController, MenuController, ModalController, NavController} from "@ionic/angular";
 import {MyportfolioModalComponent} from "./myportfolio-modal/myportfolio-modal.component";
 import {CoinsService} from "./coins.service";
 import {Subscription} from "rxjs";
 import {User} from "../auth/user.model";
 import {AuthService} from "../auth/auth.service";
 import {LogInPage} from "../auth/log-in/log-in.page";
-
 
 
 @Component({
@@ -36,12 +35,15 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   /*text = 'quote';
   author = 'author';
   fullQuote = 'full quote';*/
-  public balance: number=0;
+  public static balance: number=0;
+  public balance2 : number=0;
+  public balance3 : number=0;
   public cryptos$: Cryptocurrency[] | any;
   private coinSub: Subscription;
+  isLoading = false;
 
   constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private coinService:CoinsService, private auth:AuthService,
-              private logIn: LogInPage) {
+              private loadingCtrl: LoadingController, private navCtrl:NavController) {
     console.log('constructor');
   }
 
@@ -71,25 +73,34 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
     });
   }
 
-  deleteSth(key){
-    console.log(key);
-    this.coinService.deleteCoin(key);
+  onDeleteQuote(coin) {
+    this.loadingCtrl.create({message: 'Deleting...'}).then(loadingEl => {
+      loadingEl.present();
+      this.coinService.deleteCoin(coin.id).subscribe(() => {
+        loadingEl.dismiss();
+        this.navCtrl.navigateBack('/myportfolio');
+      });
+    });
   }
   ngOnInit() {
     this.coinSub = this.coinService.coins.subscribe((coins)=>{
       this.coins = coins;
     });
     this.auth.userId.subscribe(data=>this.id=data);
+    console.log(this.coins);
   }
 
+
+
   ionViewWillEnter(){
-    this.balance=0;
+    MyportfolioPage.balance=0;
     console.log(LogInPage.idCurrent)
     this.coinService.getCoins(LogInPage.idCurrent).subscribe((coins)=>{
       this.coins = coins;
       for(const coin in this.coins){
-        this.balance+=this.coins[coin].price*this.coins[coin].quantity;
+        MyportfolioPage.balance+=this.coins[coin].price*this.coins[coin].quantity;
       }
+      this.balance2 = MyportfolioPage.balance;
     });
   }
 

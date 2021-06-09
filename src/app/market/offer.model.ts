@@ -5,7 +5,9 @@ export class Offer{
               public coinName: string,
               public quantity: number,
               public userId: string,
-              public location: string
+              public location: string,
+              public userName: string,
+              public contact: number
   ) {}
 }
 

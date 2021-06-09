@@ -64,10 +64,29 @@ export class CoinsService {
       );
   }
 
-  deleteCoin(coin: Cryptocurrency){
-    console.log(coin.id);
-   /* this.itemDoc = this.afs.doc(`coins/${coin.id}`);
-    this.itemDoc.delete();*/
+  /*deleteCoin(coin: Cryptocurrency){
+    console.log(coin);
+   /!* this.itemDoc = this.afs.doc(`coins/${coin.id}`);
+    this.itemDoc.delete();*!/
+  }*/
+
+  deleteCoin(id: string) {
+    console.log(id);
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.delete(
+          `https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/coins/${id}.json?auth=${token}`
+        );
+      }),
+      switchMap(() => {
+        return this.coins;
+      }),
+      take(1),
+      tap((coins) => {
+        this._coins.next(coins.filter((q) => q.id !== id));
+      })
+    );
   }
 
 
