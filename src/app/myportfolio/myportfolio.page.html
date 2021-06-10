@@ -28,11 +28,17 @@
     </ion-item>
     <ion-item>
       <ion-label>Current value:</ion-label>
-      <ion-label color="success">{{balance2| number:'1.2-2'}} €</ion-label>
+      <ion-label color="success">{{balance3| number:'1.2-2'}} €</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Balance:</ion-label>
-      <ion-label color="success">{{balance2| number:'1.2-2'}} €</ion-label>
+      <ion-label color="success" *ngIf="(balance3-balance2)>0">+{{(balance3-balance2)| number:'1.2-2'}} €</ion-label>
+      <ion-label color="danger" *ngIf="(balance3-balance2)<0">{{(balance3-balance2)| number:'1.2-2'}} €</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Assets changed (%):</ion-label>
+      <ion-label color="success" *ngIf="(balance3/balance2*100-100)>0">+{{(balance3/balance2*100-100)| number:'1.2-2'}} %</ion-label>
+      <ion-label color="danger" *ngIf="(balance3/balance2*100-100)<0">{{(balance3/balance2*100-100)| number:'1.2-2'}} %</ion-label>
     </ion-item>
   </ion-list>
 

@@ -87,5 +87,24 @@ export class OfferService {
     );
   }
 
+  deleteOffer(id: string) {
+    console.log(id);
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.delete(
+          `https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/offers/${id}.json?auth=${token}`
+        );
+      }),
+      switchMap(() => {
+        return this.offers;
+      }),
+      take(1),
+      tap((offers) => {
+        this._offers.next(offers.filter((q) => q.id !== id));
+      })
+    );
+  }
+
 }
 

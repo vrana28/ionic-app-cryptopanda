@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MyportfolioModalComponent} from "../myportfolio/myportfolio-modal/myportfolio-modal.component";
-import {MenuController, ModalController} from "@ionic/angular";
+import {LoadingController, MenuController, ModalController, NavController} from "@ionic/angular";
 import {MarketModalComponent} from "./market-modal/market-modal.component";
 import {OfferService} from "./offer.service";
 import {Cryptocurrency} from "../cryptocurrency.model";
@@ -8,6 +8,8 @@ import {Subscription} from "rxjs";
 import {DataService} from "../data.service";
 import {CoinsService} from "../myportfolio/coins.service";
 import {Offer, TypeOfOffer} from "./offer.model";
+import {MyportfolioPage} from "../myportfolio/myportfolio.page";
+import {LogInPage} from "../auth/log-in/log-in.page";
 
 @Component({
   selector: 'app-market',
@@ -21,7 +23,8 @@ export class MarketPage implements OnInit {
   private offerSub: Subscription;
   public typeOfOffer: TypeOfOffer;
 
-  constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private offerService:OfferService) {
+  constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private offerService:OfferService,
+              private loadingCtrl: LoadingController, private navCtrl:NavController) {
     console.log('constructor');
   }
 
@@ -29,6 +32,7 @@ export class MarketPage implements OnInit {
     this.menuCtrl.open();
   }
 
+  public userID : string;
   offers: Offer[];
 
   openModal(){
@@ -60,6 +64,17 @@ export class MarketPage implements OnInit {
   ionViewWillEnter(){
     this.offerService.getOffers().subscribe((offers)=>{
       /*this.coins = coins;*/
+    });
+    this.userID = LogInPage.idCurrent;
+  }
+
+  onDeleteOffer(offer) {
+    this.loadingCtrl.create({message: 'Deleting...'}).then(loadingEl => {
+      loadingEl.present();
+      this.offerService.deleteOffer(offer.id).subscribe(() => {
+        loadingEl.dismiss();
+        this.navCtrl.navigateBack('/market');
+      });
     });
   }
 

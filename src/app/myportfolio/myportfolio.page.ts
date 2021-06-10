@@ -1,19 +1,3 @@
-/*import { Component, OnInit } from '@angular/core';
-
-@Component({
-  selector: 'app-myportfolio',
-  templateUrl: './myportfolio.page.html',
-  styleUrls: ['./myportfolio.page.scss'],
-})
-export class MyportfolioPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}*/
-
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {DataService} from "../data.service";
@@ -21,10 +5,8 @@ import {LoadingController, MenuController, ModalController, NavController} from 
 import {MyportfolioModalComponent} from "./myportfolio-modal/myportfolio-modal.component";
 import {CoinsService} from "./coins.service";
 import {Subscription} from "rxjs";
-import {User} from "../auth/user.model";
 import {AuthService} from "../auth/auth.service";
 import {LogInPage} from "../auth/log-in/log-in.page";
-
 
 @Component({
   selector: 'app-myporfolio',
@@ -32,12 +14,11 @@ import {LogInPage} from "../auth/log-in/log-in.page";
   styleUrls: ['./myportfolio.page.scss']
 })
 export class MyportfolioPage implements  OnInit, OnDestroy{
-  /*text = 'quote';
-  author = 'author';
-  fullQuote = 'full quote';*/
+
   public static balance: number=0;
   public balance2 : number=0;
   public balance3 : number=0;
+  public balance4: number = 0;
   public cryptos$: Cryptocurrency[] | any;
   private coinSub: Subscription;
   isLoading = false;
@@ -54,6 +35,7 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   id: string;
   user: any;
   coins: Cryptocurrency[];
+  coinsApi: Cryptocurrency[];
 
   openModal(){
     this.modalCtrl.create({
@@ -82,19 +64,23 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
       });
     });
   }
+
   ngOnInit() {
     this.coinSub = this.coinService.coins.subscribe((coins)=>{
       this.coins = coins;
     });
     this.auth.userId.subscribe(data=>this.id=data);
     console.log(this.coins);
+    this.dataService.getPrices().subscribe( (data: any) => {
+      this.cryptos$ = data
+    });
   }
-
-
 
   ionViewWillEnter(){
     MyportfolioPage.balance=0;
-    console.log(LogInPage.idCurrent)
+    this.balance2=0;
+    this.balance3=0;
+    this.balance4=0;
     this.coinService.getCoins(LogInPage.idCurrent).subscribe((coins)=>{
       this.coins = coins;
       for(const coin in this.coins){
@@ -102,6 +88,13 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
       }
       this.balance2 = MyportfolioPage.balance;
     });
+    for(const coin in this.coins){
+      for(const coin2 in this.cryptos$){
+        if(this.coins[coin].name==this.cryptos$[coin2].id){
+          this.balance3+=this.coins[coin].quantity*this.cryptos$[coin2].price;
+        }
+      }
+    }
   }
 
   ngOnDestroy() {
