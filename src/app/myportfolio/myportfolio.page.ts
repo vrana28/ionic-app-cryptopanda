@@ -7,6 +7,7 @@ import {CoinsService} from "./coins.service";
 import {Subscription} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 import {LogInPage} from "../auth/log-in/log-in.page";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-myporfolio',
@@ -24,18 +25,31 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
   isLoading = false;
 
   constructor(private dataService: DataService, private menuCtrl: MenuController, private modalCtrl:ModalController, private coinService:CoinsService, private auth:AuthService,
-              private loadingCtrl: LoadingController, private navCtrl:NavController) {
+              private loadingCtrl: LoadingController, private navCtrl:NavController, private route:ActivatedRoute) {
     console.log('constructor');
   }
 
   openMenu(){
     this.menuCtrl.open();
   }
-
+  coin:Cryptocurrency;
   id: string;
   user: any;
   coins: Cryptocurrency[];
   coinsApi: Cryptocurrency[];
+
+  ngOnInit() {
+
+    this.coinSub = this.coinService.coins.subscribe((coins)=>{
+      this.coins = coins;
+    });
+    this.auth.userId.subscribe(data=>this.id=data);
+    console.log(this.coins);
+
+    this.dataService.getPrices().subscribe( (data: any) => {
+      this.cryptos$ = data
+    });
+  }
 
   openModal(){
     this.modalCtrl.create({
@@ -65,15 +79,42 @@ export class MyportfolioPage implements  OnInit, OnDestroy{
     });
   }
 
-  ngOnInit() {
-    this.coinSub = this.coinService.coins.subscribe((coins)=>{
-      this.coins = coins;
-    });
-    this.auth.userId.subscribe(data=>this.id=data);
-    console.log(this.coins);
-    this.dataService.getPrices().subscribe( (data: any) => {
-      this.cryptos$ = data
-    });
+  onEditCoin(c) {
+    this.coin = c;
+    console.log(this.coin);
+    console.log(this.coin.quantity);
+    this.modalCtrl
+      .create({
+        component: MyportfolioModalComponent,
+        componentProps: {title: 'Edit coin', price: this.coin.price, quantity: this.coin.quantity, date:this.coin.boughtDate},
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
+      })
+      .then((resultData) => {
+        if (resultData.role === 'confirm') {
+          this.loadingCtrl
+            .create({message: 'Editing...'})
+            .then((loadingEl) => {
+              loadingEl.present();
+              this.coinService
+                .editCoin(
+                  this.coin.id,
+                  this.coin.name,
+                  resultData.data.coinData.price,
+                  resultData.data.coinData.quantity,
+                  this.coin.boughtDate,
+                  this.coin.userId
+                )
+                .subscribe((coins) => {
+                  this.coin.price = resultData.data.coinData.price;
+                  this.coin.quantity = resultData.data.coinData.quantity;
+                  loadingEl.dismiss();
+                });
+            });
+        }
+      });
   }
 
   ionViewWillEnter(){

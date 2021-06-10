@@ -4,8 +4,6 @@ import {map, switchMap, take, tap} from "rxjs/operators";
 import {Cryptocurrency} from "../cryptocurrency.model";
 import {BehaviorSubject} from "rxjs";
 import {AuthService} from "../auth/auth.service";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
-
 
 interface CoinData{
   name: string,
@@ -15,16 +13,15 @@ interface CoinData{
   userId: string
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class CoinsService {
 
   private _coins = new BehaviorSubject<Cryptocurrency[]>([]);
-  /*itemDoc: AngularFirestoreDocument<Cryptocurrency>;*/
 
-  constructor(private http: HttpClient, private authService: AuthService/*, public afs: AngularFirestore*/) { }
+
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
 
   get coins(){
@@ -64,12 +61,6 @@ export class CoinsService {
       );
   }
 
-  /*deleteCoin(coin: Cryptocurrency){
-    console.log(coin);
-   /!* this.itemDoc = this.afs.doc(`coins/${coin.id}`);
-    this.itemDoc.delete();*!/
-  }*/
-
   deleteCoin(id: string) {
     console.log(id);
     return this.authService.token.pipe(
@@ -88,7 +79,6 @@ export class CoinsService {
       })
     );
   }
-
 
   getCoins(id) {
     return this.authService.token.pipe(
@@ -113,4 +103,51 @@ export class CoinsService {
       })
     );
   }
+
+  editCoin(
+    id: string,
+    name: string,
+    price: number,
+    quantity: number,
+    boughtDate: Date,
+    userId: string
+  ) {
+    console.log(quantity);
+    console.log(price);
+    return this.authService.token.pipe(
+      take(1),
+      switchMap((token) => {
+        return this.http.put(
+          `https://cryptopanda-ionic-default-rtdb.europe-west1.firebasedatabase.app/coins/${id}.json?auth=${token}`,
+          {
+            boughtDate,
+            name,
+            price,
+            quantity,
+            userId
+          }
+        );
+      }),
+      switchMap(() => {
+        return this.coins;
+      }),
+      take(1),
+      tap((coins) => {
+        const updatedCoinIndex = coins.findIndex((q) => q.id === id);
+        const updatedCoins = [...coins];
+        updatedCoins[updatedCoinIndex] = new Cryptocurrency(
+          id,
+          name,
+          price,
+          null,
+          boughtDate,
+          0,
+          quantity,
+          userId
+        );
+        this._coins.next(updatedCoins);
+      })
+    );
+  }
+
 }

@@ -63,7 +63,10 @@
           <ion-col size="6">
             <ion-toolbar>
               <ion-buttons slot="end">
-                <ion-fab-button size="small" color="tertiary" (click)="onDeleteQuote(coin)">
+                <ion-fab-button size="small" color="tertiary" (click)="onEditCoin(coin)">
+                  <ion-icon name="pencil"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button size="small" color="danger" (click)="onDeleteQuote(coin)">
                   <ion-icon name="trash"></ion-icon>
                 </ion-fab-button>
               </ion-buttons>

@@ -13,6 +13,9 @@ export class MyportfolioModalComponent implements OnInit {
 
   @ViewChild('f',{static:true}) form: NgForm;
   @Input() title: string;
+  @Input() price:number;
+  @Input() quantity:number;
+  @Input() date:Date;
 
   public cryptos$: Cryptocurrency[] | any;
 
