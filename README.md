@@ -8,6 +8,7 @@ using Ionic, Angular, Firebase, IDE - Visual Studio Code
 
 ## Design
 
-Home Page                  |  Star Rank Page           |  Fork Rank Page
-:-------------------------:|:-------------------------:|:-------------------------:
-<img src="views/home.png" alt="Home" width="300">  |  <img src="views/stars.png" alt="Stars" width="300"> | <img src="views/forks.png" alt="Forks" width="300">
+Home Page                  |  Star Rank Page           |  Fork Rank Page | Home Page                  |  Star Rank Page           |  Fork Rank Page
+:-------------------------:|:-------------------------:|:-------------------------: |:-------------------------: |:-------------------------: |:-------------------------:
+<img src="cryptopanda1.png" alt="Home" width="300">  |  <img src="cryptopanda1.png" alt="Stars" width="300"> | <img src="cryptopanda1.png" alt="Forks" width="300">
+<img src="cryptopanda1.png" alt="Home" width="300">  |  <img src="cryptopanda1.png" alt="Stars" width="300"> | <img src="cryptopanda1.png" alt="Forks" width="300">
